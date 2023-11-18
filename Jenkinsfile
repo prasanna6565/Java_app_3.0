@@ -76,7 +76,7 @@ pipeline{
         stage('Updating the Jfrog credentials : jfrog'){
          when { expression {  params.action == 'create' } }
             steps{
-               cript {
+               script {
                     // Add your Artifactory publishing logic here
                     // Example: Use JFrog CLI to publish the WAR file to Artifactory
                     sh """
