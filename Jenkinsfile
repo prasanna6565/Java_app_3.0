@@ -72,6 +72,20 @@ pipeline{
                }
             }
         }
+
+        stage('Updating the Jfrog credentials : jfrog'){
+         when { expression {  params.action == 'create' } }
+            steps{
+               cript {
+                    // Add your Artifactory publishing logic here
+                    // Example: Use JFrog CLI to publish the WAR file to Artifactory
+                    sh """
+                        jfrog rt config --url <ARTIFACTORY_URL> --apikey <ARTIFACTORY_API_KEY> --interactive=false
+                        jfrog rt u target/your-application.war <REPO_KEY>/<GROUP_ID>/<ARTIFACT_ID>/<VERSION>/<ARTIFACT_ID>-<VERSION>.war
+                    """
+                }
+            }
+        }
         stage('Docker Image Build'){
          when { expression {  params.action == 'create' } }
             steps{
